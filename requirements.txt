@@ -1,0 +1,6 @@
+#Librerias necesarias
+fastapi
+uvicorn
+sqlalchemy
+psycopg2-binary  # Driver para PostgreSQL
+pydantic
