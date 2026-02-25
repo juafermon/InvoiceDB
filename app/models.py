@@ -1,6 +1,6 @@
 #Tablas de la BD con SQLAlchemy 
-from sqalchemy import Boolean, Column, Float, Integer, String
-from .database import Base
+from sqlalchemy import Boolean, Column, Float, Integer, String
+from .dbSQlite import Base
 
 class Product(Base):
     __tablename__ = "products"
