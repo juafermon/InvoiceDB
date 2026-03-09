@@ -1,24 +1,41 @@
-#Validacion de datos con Pydantic
-import pydantic
+from pydantic import BaseModel
 from typing import Optional
+from datetime import datetime
 
-# Base común (para evitar repetir código)
-class ProductBase(pydantic.BaseModel):
+# Esquema base para Clientes
+class ClientBase(BaseModel):
+    tax_id: str
     name: str
-    description: Optional[str] = None
-    price: float
-    stock: int
+    email: Optional[str] = None
+    phone: Optional[str] = None
+    address: Optional[str] = None
 
-# Esquema para CREAR (Lo que recibimos de Flutter)
-class ProductCreate(ProductBase):
-    #pendiente de agregar codigo
+class ClientCreate(ClientBase):
     pass
 
-# Esquema para LEER (Lo que devolvemos a Flutter)
-# Incluye el ID que genera la base de datos
+class Client(ClientBase):
+    id: int
+    created_at: datetime
+
+    class Config:
+        from_attributes = True
+
+# Esquema base para Productos
+class ProductBase(BaseModel):
+    sku: str
+    name: str
+    description: Optional[str] = None
+    cost_price: float
+    sale_price: float
+    stock: int
+    tax_rate: float
+
+class ProductCreate(ProductBase):
+    pass
+
 class Product(ProductBase):
     id: int
     is_active: bool
 
     class Config:
-        from_attributes = True # Permite leer desde el modelo de SQLAlchemy
+        from_attributes = True
