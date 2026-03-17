@@ -65,7 +65,7 @@ class Invoice_Items(Base):
     __tablename__ = "INVOICE_ITEMS"
 
     id = Column(Integer, primary_key=True, index=True)
-    invoice_id = Column(Integer, ForeignKey("INVOICES.ID"))
+    invoice_id = Column(Integer, ForeignKey("INVOICES.id"))
     product_id = Column(Integer, ForeignKey("PRODUCTS.id"))
     quantity = Column(Integer)
     unit_price = Column(String)
@@ -73,10 +73,12 @@ class Invoice_Items(Base):
     tax_amount =  Column(String)
 
 class Accounting_Transactions(Base):
+    __tablename__ = "ACCOUNTING_TRANSACTIONS"
+
     id = Column(Integer, primary_key=True, index=True)
     type = Column(String)
     category = Column(String)
     amount = Column(String)
     description = Column(String)
-    related_invoice_id = Column(Integer, ForeignKey("INVOICES.ID"))
+    related_invoice_id = Column(Integer, ForeignKey("INVOICES.id"))
     created_at = Column(String)

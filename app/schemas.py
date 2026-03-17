@@ -2,9 +2,9 @@ from pydantic import BaseModel
 from typing import Optional
 from datetime import datetime
 
-# Esquema base para Clientes
+# --- ESQUEMAS PARA CLIENTES ---
 class ClientBase(BaseModel):
-    tax_id: str
+    tax_id: int # En tu models.py lo pusiste como Integer
     name: str
     email: Optional[str] = None
     phone: Optional[str] = None
@@ -15,20 +15,22 @@ class ClientCreate(ClientBase):
 
 class Client(ClientBase):
     id: int
-    created_at: datetime
+    # En tu models.py comentaste created_at, si lo habilitas en la BD, descoméntalo aquí:
+    # created_at: Optional[datetime] = None 
 
     class Config:
         from_attributes = True
 
-# Esquema base para Productos
+# --- ESQUEMAS PARA PRODUCTOS ---
 class ProductBase(BaseModel):
     sku: str
     name: str
     description: Optional[str] = None
-    cost_price: float
-    sale_price: float
-    stock: int
-    tax_rate: float
+    # Cambiados a str para coincidir con tu models.py
+    cost_price: str = "0.0"
+    sale_price: str = "0.0"
+    stock: int = 0
+    tax_rate: str = "16.0"
 
 class ProductCreate(ProductBase):
     pass
@@ -39,3 +41,11 @@ class Product(ProductBase):
 
     class Config:
         from_attributes = True
+
+# --- ESQUEMA PARA TOKEN (Necesario para el Login) ---
+class Token(BaseModel):
+    access_token: str
+    token_type: str
+
+class TokenData(BaseModel):
+    username: Optional[str] = None
